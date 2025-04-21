@@ -6,8 +6,10 @@ import base64
 from test import predict
 
 app = Flask(__name__)
-
-CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['CORS_RESOURCES'] = {r"/predict-image": {"origins": "https://tomatonet-frontend.vercel.app"}}
+CORS(app, resources={r"/predict-image": {"origins": "https://tomatonet-frontend.vercel.app"}})
+CORS(app, resources={r"/*": {"origins": "https://tomatonet-frontend.vercel.app"}})
 
 @app.route('/predict-image', methods=['POST'])
 def predictImage():
@@ -31,4 +33,4 @@ def predictImage():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5000)
