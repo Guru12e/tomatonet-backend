@@ -6,10 +6,7 @@ import base64
 from test import predict
 
 app = Flask(__name__)
-app.config['CORS_HEADERS'] = 'Content-Type'
-app.config['CORS_RESOURCES'] = {r"/predict-image": {"origins": "https://tomatonet-frontend.vercel.app"}}
-CORS(app, resources={r"/predict-image": {"origins": "https://tomatonet-frontend.vercel.app"}})
-CORS(app, resources={r"/*": {"origins": "https://tomatonet-frontend.vercel.app"}})
+CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "https://tomatonet-frontend.vercel.app/", "https://tomatonet-frontend.vercel.app"]}})
 
 @app.route('/predict-image', methods=['POST'])
 def predictImage():
